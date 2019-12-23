@@ -1,0 +1,71 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="masoud-xubuntu (generated)" id="1577095947506-1">
+        <createTable tableName="card">
+            <column name="id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="name" type="VARCHAR(50)"/>
+            <column name="number" type="VARCHAR(50)"/>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="masoud-xubuntu (generated)" id="1577095947506-2">
+        <createTable tableName="transaction">
+            <column name="id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="amount" type="FLOAT8"/>
+            <column name="canceled" type="BOOLEAN"/>
+            <column name="date" type="BIGINT"/>
+            <column name="msg" type="VARCHAR(100)"/>
+            <column name="password" type="VARCHAR(30)"/>
+            <column name="source_card" type="VARCHAR(50)"/>
+            <column name="status" type="INT"/>
+            <column name="target_card" type="VARCHAR(50)"/>
+            <column name="target_name" type="VARCHAR(50)"/>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="masoud-xubuntu (generated)" id="1577095947506-3">
+        <createTable tableName="users">
+            <column name="id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="firstname" type="VARCHAR(100)"/>
+            <column name="lastname" type="VARCHAR(100)"/>
+            <column name="password" type="VARCHAR(100)"/>
+            <column name="username" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="masoud-xubuntu (generated)" id="1577095947506-4">
+        <addPrimaryKey columnNames="id" constraintName="card_pkey" tableName="card"/>
+    </changeSet>
+    <changeSet author="masoud-xubuntu (generated)" id="1577095947506-5">
+        <addPrimaryKey columnNames="id" constraintName="transaction_pkey" tableName="transaction"/>
+    </changeSet>
+    <changeSet author="masoud-xubuntu (generated)" id="1577095947506-6">
+        <addPrimaryKey columnNames="id" constraintName="users_pkey" tableName="users"/>
+    </changeSet>
+    <changeSet author="masoud-xubuntu (generated)" id="1577095947506-7">
+        <addUniqueConstraint columnNames="username" constraintName="uk_r43af9ap4edm43mmtq01oddj6" tableName="users"/>
+    </changeSet>
+    <changeSet author="masoud-xubuntu (generated)" id="1577095947506-8">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="transaction" constraintName="fkanjpo5tiapru7an6cw4cu37y4" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="masoud-xubuntu (generated)" id="1577095947506-9">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="card" constraintName="fkq5apcc4ddrab8t48q2uqvyquq" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+</databaseChangeLog>
