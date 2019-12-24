@@ -127,7 +127,18 @@ public class KafkaAdapter {
 
     public void send(Topic topic, Transaction transaction) {
         LOGGER.info("Kafka publish transaction with id: " + transaction.getId());
-        producer.send(new ProducerRecord<String, String>("" + topic, "" + transaction.getId()));
+        if (isOnTestMode) {
+            try {
+                if (Topic.performing.equals(topic)) { // Verifying
+                    performingQueue.put("" + transaction.getId());
+                } else { // Performing
+                    verifyingQueue.put("" + transaction.getId());
+                }
+            } catch (InterruptedException e) {
+            }
+        } else {
+            producer.send(new ProducerRecord<String, String>("" + topic, "" + transaction.getId()));
+        }
     }
 
     // This function consumes kafka entries
